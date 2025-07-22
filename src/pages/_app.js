@@ -1,7 +1,10 @@
+import ThemeProvider from '@/context/ThemeContext'
 import '@/styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps }) {
+  return (
+    <ThemeProvider>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
 }
-
-export default MyApp
