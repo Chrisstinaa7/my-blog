@@ -10,6 +10,7 @@ In 2025, the world witnesses a recalibration of global alliances...
 - The US-China competition intensifies  
 - Russia seeks strategic depth  
 - AI and semiconductor supremacy play central roles`,
+        featuredImage: '/images/geopolitics.png',
         thumbnail: '/images/geopolitics.png',
         date: '2025-07-23',
         author: 'Christina Peace',
@@ -25,6 +26,7 @@ Nations are divided between economic growth and sustainability...
 - Renewable energy adoption sees a surge  
 - Controversies around carbon credits grow  
 - Climate migration reshapes demographics`,
+        featuredImage: '/images/climate-action.png',
         thumbnail: '/images/climate-action.png',
         date: '2025-07-21',
         author: 'Christina Peace',
@@ -40,7 +42,9 @@ Governments and corporations wrestle with ethical frameworks...
 - Who is accountable for AI decisions?  
 - How transparent are AI systems?  
 - Can bias ever be fully removed from algorithms?`,
+        featuredImage: '/images/ai-ethics.png',
         thumbnail: '/images/ai-ethics.png',
+
         date: '2025-07-19',
         author: 'Christina Peace',
     }
