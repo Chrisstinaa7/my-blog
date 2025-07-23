@@ -10,7 +10,8 @@ export default function HomePage() {
         <h1 className="text-3xl font-bold mb-6">Latest Blog Posts</h1>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map(blog => (
-            <BlogCard key={blog.id} blog={blog} />
+            <BlogCard key={blog.id} post={blog} />
+            //                 🔑       ^ post instead of blog
           ))}
         </div>
       </div>
