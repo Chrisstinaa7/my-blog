@@ -1,21 +1,15 @@
-import BlogCard from '@/components/BlogCard'
+import { blogs } from '../data/blogs';
+import BlogCard from '../components/BlogCard';
 
-const dummyPosts = [
-  {
-    id: 1,
-    slug: 'post-1',
-    title: 'My First Blog',
-    summary: 'This is a short summary of the blog.',
-    thumbnail: '/sample.jpg', // Add image in /public/
-  },
-]
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="p-4 grid md:grid-cols-2 gap-4">
-      {dummyPosts.map(post => (
-        <BlogCard key={post.id} post={post} />
-      ))}
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6">Latest Blog Posts</h1>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {blogs.map(blog => (
+          <BlogCard key={blog.id} blog={blog} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
