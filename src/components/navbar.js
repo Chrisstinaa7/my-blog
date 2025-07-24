@@ -1,15 +1,18 @@
 import Link from 'next/link';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
     return (
-        <nav className="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
-            <Link href="/" className="text-xl font-bold hover:text-gray-300">
+        <nav className="w-full px-6 py-4 bg-white dark:bg-gray-900 shadow-md flex items-center justify-between">
+            <Link href="/" className="text-xl font-bold text-gray-800 dark:text-white">
                 VerseFrame
             </Link>
-            <div className="space-x-4">
-                <Link href="/" className="hover:text-gray-300">Home</Link>
-                <Link href="/login" className="hover:text-gray-300">Login</Link>
-                <Link href="/register" className="hover:text-gray-300">Register</Link>
+
+            <div className="flex items-center space-x-4 text-gray-800 dark:text-white">
+                <Link href="/" className="hover:text-gray-400">Home</Link>
+                <Link href="/login" className="hover:text-gray-400">Login</Link>
+                <Link href="/register" className="hover:text-gray-400">Register</Link>
+                <ThemeToggle />
             </div>
         </nav>
     );

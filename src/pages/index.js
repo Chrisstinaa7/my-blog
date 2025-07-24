@@ -11,7 +11,6 @@ export default function HomePage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map(blog => (
             <BlogCard key={blog.id} post={blog} />
-            //                 🔑       ^ post instead of blog
           ))}
         </div>
       </div>
