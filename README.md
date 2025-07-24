@@ -1,40 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 📝 Simple Blog with React & Next.js
 
-## Getting Started
+A responsive blog application built with **React**, **Next.js**, and **Firebase Authentication**. Users can register, log in, create blog posts with images, and view posts. All blog data is saved in **localStorage**, while authentication is securely handled by Firebase.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📸 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🏠 **Home Page** – Displays all blog posts with title, summary, and thumbnail.
+- 🔐 **Authentication** – Firebase Email/Password Auth for login and registration.
+- ✍️ **Submit Blog** – Authenticated users can submit blog posts with:
+  - Title
+  - Summary
+  - Content
+  - Featured Image (stored in Base64 in localStorage)
+- 📖 **Post Detail Page** – View full post with image and content.
+- 🌙 **Dark/Light Mode** – Toggle between themes.
+- 💾 **LocalStorage** – Stores all blog data including images in Base64 format.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## 🔧 Tech Stack
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- **Frontend**: [Next.js](https://nextjs.org/), [React](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)
+- **Auth**: [Firebase Authentication](https://firebase.google.com/docs/auth)
+- **Storage**: Browser **localStorage** (images + posts)
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- /components → Reusable UI components (e.g., BlogCard, Navbar)
+- /pages → Route-based pages (home, post, submit, auth)
+- /styles → Tailwind base styles
+- /utils → Firebase config and helpers (e.g., auth.js)
+- /public → Static assets
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 🧪 Getting Started Locally
+### 1. Clone the Repository
+- git clone https://github.com/Chrisstinaa771/my-blog.git
+- cd simple-blog-nextjs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Install Dependencies
+- npm install
 
-## Deploy on Vercel
+### 3. Set Up Firebase
+- Go to Firebase Console
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Create a new project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Enable Email/Password authentication
+
+- Get your Firebase config keys and replace them in firebaseConfig.js
+
+### 4. Start the Development Server
+- npm run dev
+- Then open http://localhost:3000 in your browser.
+
+## Future Enhancements
+- Store blog posts in Firebase Firestore or IndexedDB
+
+- Add rich text editor for blog content
+
+- Add edit/delete options for blog posts
+
+- Pagination or search for posts
+
+
