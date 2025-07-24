@@ -1,35 +1,28 @@
-// context/AuthContext.js
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const router = useRouter();
+export function AuthProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const stored = localStorage.getItem('isLoggedIn');
-        setIsLoggedIn(stored === 'true');
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            setUser(firebaseUser || null);
+            setLoading(false);
+        });
+        return () => unsubscribe();
     }, []);
 
-    const login = () => {
-        localStorage.setItem('isLoggedIn', 'true');
-        setIsLoggedIn(true);
-        router.push('/');
-    };
-
-    const logout = () => {
-        localStorage.removeItem('isLoggedIn');
-        setIsLoggedIn(false);
-        router.push('/login');
-    };
+    const logout = () => signOut(auth);
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, logout }}>
             {children}
         </AuthContext.Provider>
     );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);
