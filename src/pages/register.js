@@ -1,42 +1,62 @@
 import { useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/router';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import Link from 'next/link';
 
 export default function Register() {
     const [user, setUser] = useState({ email: '', password: '' });
-    const { login } = useAuth();
+    const [error, setError] = useState('');
+    const router = useRouter();
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        if (user.email && user.password) {
-            login();
+        try {
+            await createUserWithEmailAndPassword(auth, user.email, user.password);
+            router.push('/login'); // After register, go to login
+        } catch (err) {
+            setError(err.message);
         }
     };
 
     return (
-        <form
-            onSubmit={handleRegister}
-            className="max-w-sm mx-auto space-y-4 mt-10 bg-gray-100 p-6 rounded shadow"
-        >
-            <h2 className="text-xl font-semibold">Register</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="w-full px-3 py-2 border rounded"
-                required
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                className="w-full px-3 py-2 border rounded"
-                required
-            />
-            <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">
-                Register
-            </button>
-        </form>
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white">
+            <form
+                onSubmit={handleRegister}
+                className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md w-full max-w-md"
+            >
+                <h2 className="text-2xl font-bold mb-4">Register</h2>
+
+                {error && <p className="text-red-500 mb-2">{error}</p>}
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full p-2 mb-4 border  text-black border-gray-300 rounded"
+                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className="w-full p-2 mb-4 border  text-black border-gray-300 rounded"
+                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                    required
+                />
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                >
+                    Register
+                </button>
+
+                <p className="mt-4 text-sm">
+                    Already have an account?{' '}
+                    <Link href="/login" className="text-blue-500 hover:underline">
+                        Login
+                    </Link>
+                </p>
+            </form>
+        </div>
     );
 }

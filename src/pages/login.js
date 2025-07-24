@@ -1,43 +1,63 @@
-
 import { useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import Link from 'next/link';
 
 export default function Login() {
     const [user, setUser] = useState({ email: '', password: '' });
-    const { login } = useAuth();
+    const [error, setError] = useState('');
+    const router = useRouter();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (user.email && user.password) {
-            login();
+        try {
+            await signInWithEmailAndPassword(auth, user.email, user.password);
+            localStorage.setItem('isLoggedIn', 'true');
+            router.push('/');
+        } catch (err) {
+            setError('Invalid credentials');
         }
     };
 
     return (
-        <form
-            onSubmit={handleLogin}
-            className="max-w-sm mx-auto space-y-4 mt-10 bg-gray-100 p-6 rounded shadow"
-        >
-            <h2 className="text-xl font-semibold">Login</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                className="w-full px-3 py-2 border rounded"
-                required
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                className="w-full px-3 py-2 border rounded"
-                required
-            />
-            <button type="submit" className="w-full py-2 bg-green-600 text-white rounded">
-                Login
-            </button>
-        </form>
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white">
+            <form
+                onSubmit={handleLogin}
+                className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md w-full max-w-md"
+            >
+                <h2 className="text-2xl font-bold mb-4">Login</h2>
+
+                {error && <p className="text-red-500 mb-2">{error}</p>}
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full p-2 mb-4 border  text-black border-gray-300 rounded"
+                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className="w-full p-2 mb-4 border  text-black border-gray-300 rounded"
+                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                    required
+                />
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                >
+                    Login
+                </button>
+
+                <p className="mt-4 text-sm">
+                    Don’t have an account?{' '}
+                    <Link href="/register" className="text-blue-500 hover:underline">
+                        Register
+                    </Link>
+                </p>
+            </form>
+        </div>
     );
 }
