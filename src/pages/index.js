@@ -1,15 +1,21 @@
 // pages/index.js
 import { useEffect, useState } from 'react';
-import { blogs } from '../data/blogs';
+import { blogs as staticBlogs } from '../data/blogs';
 import BlogCard from '../components/BlogCard';
 import { useRouter } from 'next/router';
 
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [combinedBlogs, setCombinedBlogs] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
+
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || [];
+    const allBlogs = [...staticBlogs, ...storedBlogs];
+    setCombinedBlogs(allBlogs);
   }, []);
 
   return (
@@ -17,11 +23,16 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold mb-6">
         {isLoggedIn ? 'Welcome back!' : 'Latest Blog Posts'}
       </h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.id} post={blog} />
-        ))}
-      </div>
+
+      {combinedBlogs.length === 0 ? (
+        <p>No blogs found. Submit one!</p>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {combinedBlogs.map((blog, index) => (
+            <BlogCard key={index} post={blog} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

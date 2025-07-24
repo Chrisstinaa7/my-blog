@@ -14,11 +14,14 @@ export default function Login() {
         try {
             await signInWithEmailAndPassword(auth, user.email, user.password);
             localStorage.setItem('isLoggedIn', 'true');
-            router.push('/');
-        } catch (err) {
-            setError('Invalid credentials');
+            localStorage.setItem('currentUser', user.email);
+            router.push('/submit');
+        } catch (error) {
+            console.error('Login failed:', error.message);
+            setError('Invalid email or password');
         }
     };
+
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white">
